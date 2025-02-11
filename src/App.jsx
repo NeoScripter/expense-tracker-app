@@ -7,6 +7,7 @@ import calculateTotal from './utils/calculateTotal';
 import logo from './assets/logo.webp';
 import { AddExpenseForm } from './components/AddExpenseForm';
 import { DATE_GROUPINGS } from './utils/dateGroupings';
+import Calendar from './components/Calendar';
 
 function App() {
     const [expenses, setExpenses] = useState(initialData);
@@ -31,7 +32,7 @@ function App() {
                     setExpenses={setExpenses}
                 />
 
-                <div className="flex items-center justify-between flex-col sm:flex-row">
+                <header className="flex items-center justify-between flex-col sm:flex-row">
                     <div className="max-w-50 mb-2">
                         <img src={logo} alt="TrackSpence" />
                     </div>
@@ -42,6 +43,12 @@ function App() {
                     >
                         Add expense
                     </button>
+                </header>
+
+                <div className='grid items-start sdm:grid-cols-2 sdm:gap-6 px-2 sm:px-0'>
+                  <Calendar label="Select start date" />
+                  <Calendar label="Select end date" />
+
                 </div>
 
                 <ExpenseFilterPanel
