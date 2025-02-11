@@ -1,0 +1,22 @@
+export const expenses = [
+    { id: "exp-1f7b6d9c", date: "2025-02-08", description: "Movie Tickets", amount: 30.00 },
+    { id: "exp-4c2e9a5b", date: "2025-02-08", description: "Books", amount: 15.75 },
+    { id: "exp-7d5f1c9b", date: "2025-02-10", description: "Subscription Service", amount: 12.99 },
+    { id: "exp-9b3a7f2d", date: "2025-02-10", description: "Lunch", amount: 18.50 },
+    { id: "exp-2d6e5a9f", date: "2025-02-10", description: "Clothing", amount: 80.00 },
+    { id: "exp-5a9f7d3c", date: "2025-02-10", description: "Taxi Fare", amount: 22.40 },
+    { id: "exp-8b4e1a7c", date: "2025-02-14", description: "Gift", amount: 50.00 },
+    { id: "exp-6c2f5d9a", date: "2025-02-15", description: "Groceries", amount: 65.25 },
+    { id: "exp-1a7b9f3d", date: "2025-02-16", description: "Doctor's Visit", amount: 150.00 },
+    { id: "exp-4e5f2a9c", date: "2025-02-17", description: "Streaming Service", amount: 9.99 },
+    { id: "exp-7d3b6f1c", date: "2025-02-18", description: "Coffee", amount: 3.75 },
+    { id: "exp-9c5a2e7f", date: "2025-02-19", description: "Home Repair", amount: 200.00 },
+    { id: "exp-3f1d7a9b", date: "2025-02-20", description: "Fast Food", amount: 11.25 },
+    { id: "exp-9f3a2b4d", date: "2025-02-01", description: "Groceries", amount: 45.30 },
+    { id: "exp-7e1c5f8a", date: "2025-02-01", description: "Electricity Bill", amount: 120.75 },
+    { id: "exp-2a6d3e9b", date: "2025-02-03", description: "Dinner Out", amount: 35.20 },
+    { id: "exp-5f9b7c1d", date: "2025-02-03", description: "Gas", amount: 60.00 },
+    { id: "exp-8e4f2a3c", date: "2025-02-05", description: "Coffee", amount: 4.50 },
+    { id: "exp-6d1f9b7a", date: "2025-02-05", description: "Internet Bill", amount: 55.00 },
+    { id: "exp-3a9e5c7d", date: "2025-02-07", description: "Gym Membership", amount: 25.00 }
+];
