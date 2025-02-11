@@ -1,7 +1,8 @@
 import { isSameDay, isSameWeek } from 'date-fns';
+import { DATE_GROUPINGS } from './dateGroupings';
 
 export function groupExpensesByInterval(expenses, dateGrouping, searchQuery) {
-    const isSameInterval = dateGrouping === 'week' ? isSameWeek : isSameDay;
+    const isSameInterval = dateGrouping === DATE_GROUPINGS.WEEK ? isSameWeek : isSameDay;
     // Sort the expenses in acsending order
     const sortedExpenses = [...expenses].sort(
         (a, b) => new Date(a.date) - new Date(b.date)

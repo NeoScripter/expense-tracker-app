@@ -6,10 +6,11 @@ import ExpenseFilterPanel from './components/ExpenseFilterPanel ';
 import calculateTotal from './utils/calculateTotal';
 import logo from './assets/logo.webp';
 import { AddExpenseForm } from './components/AddExpenseForm';
+import { DATE_GROUPINGS } from './utils/dateGroupings';
 
 function App() {
     const [expenses, setExpenses] = useState(initialData);
-    const [dateGrouping, setDateGrouping] = useState('day');
+    const [dateGrouping, setDateGrouping] = useState(DATE_GROUPINGS.DAY);
     const [searchQuery, setSearchQuery] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -67,7 +68,7 @@ function App() {
 export default App;
 
 function ExpenseSummary({ expenses }) {
-    const date = new Date(expenses[0].date || '');
+    const date = expenses[0] ? new Date(expenses[0].date) : null;
     const total = expenses.reduce(
         (acc, { amount }) => acc + Math.round(amount * 100),
         0
@@ -77,7 +78,7 @@ function ExpenseSummary({ expenses }) {
         <div className="space-y-2">
             <div className="border border-gray-200 rounded-xs pb-6 bg-white">
                 <header className="flex justify-between gap-2 items-center px-4 sm:px-8 py-5 border-b border-gray-200">
-                    <div>{format(date, 'MMMM do')}</div>
+                    <div>{date && format(date, 'MMMM do')}</div>
                     <div>Spent: ${total / 100}</div>
                 </header>
 

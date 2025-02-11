@@ -1,3 +1,5 @@
+import { DATE_GROUPINGS } from "../utils/dateGroupings";
+
 export default function ExpenseFilterPanel({ dateGrouping, setDateGrouping, totalAmount, searchQuery, setSearchQuery }) {
     return (
         <div className="flex flex-wrap items-center justify-between gap-3 py-2 px-4 bg-white border border-gray-200 rounded-sm">
@@ -38,7 +40,7 @@ export default function ExpenseFilterPanel({ dateGrouping, setDateGrouping, tota
             </div>
             <div className="flex items-center gap-1">
                 <button
-                    onClick={() => setDateGrouping('day')}
+                    onClick={() => setDateGrouping(DATE_GROUPINGS.DAY)}
                     className={`p-3 text-sm border border-gray-300 rounded-sm ${
                         dateGrouping === 'day'
                             ? 'text-white bg-primary-yellow'
@@ -48,7 +50,7 @@ export default function ExpenseFilterPanel({ dateGrouping, setDateGrouping, tota
                     By day
                 </button>
                 <button
-                    onClick={() => setDateGrouping('week')}
+                    onClick={() => setDateGrouping(DATE_GROUPINGS.WEEK)}
                     className={`p-3 text-sm border border-gray-300 rounded-sm ${
                         dateGrouping === 'week'
                             ? 'text-white bg-primary-yellow'
