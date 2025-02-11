@@ -27,6 +27,7 @@ function App() {
                 <AddExpenseForm
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
+                    setExpenses={setExpenses}
                 />
 
                 <div className="flex items-center justify-between flex-col sm:flex-row">
@@ -34,7 +35,10 @@ function App() {
                         <img src={logo} alt="TrackSpence" />
                     </div>
 
-                    <button onClick={() => setIsModalOpen(true)} className="btn-primary rounded-sm px-6 py-2">
+                    <button
+                        onClick={() => setIsModalOpen(true)}
+                        className="btn-primary rounded-sm px-6 py-2"
+                    >
                         Add expense
                     </button>
                 </div>

@@ -34,6 +34,10 @@
     }
 }
 
+.toast {
+  animation: fade-out 1000ms 3000ms forwards;
+}
+
 .modal .modal-body {
     animation: slide-in 350ms forwards;
     transform: translateX(100%);
@@ -47,4 +51,12 @@
     100% {
       transform: translateX(0%);
     }
+}
+
+@keyframes fade-out {
+
+  100% {
+    transform: translateX(300%);
+    opacity: 0;
+  }
 }
