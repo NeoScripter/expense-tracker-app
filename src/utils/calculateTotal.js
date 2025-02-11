@@ -3,9 +3,11 @@ export default function calculateTotal(groupedExpenses) {
         return (
           total +
             summary.reduce(
-                (acc, { amount }) => acc + Math.round(amount * 100),
+                // Convert to cents to avoid floating-point issues
+                (acc, { amount }) => acc + Math.round(amount * 100), 
                 0
             )
         );
-    }, 0) / 100;
+    // Convert back to dollars for the final total
+    }, 0) / 100; 
 }

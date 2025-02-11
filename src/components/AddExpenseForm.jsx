@@ -7,69 +7,77 @@ import {
 } from 'react';
 
 export function AddExpenseForm({ onClose, isOpen, setExpenses }) {
-    const [isClosing, setIsClosing] = useState(false);
-    const [showMessage, setShowMessage] = useState(false);
+    const [isClosing, setIsClosing] = useState(false); // Tracks modal closing animation state
+    const [showMessage, setShowMessage] = useState(false); // Controls visibility of success message
+    
+    // References for previous modal state and form fields
     const prevIsOpen = useRef(null);
     const amountRef = useRef(null);
     const dateRef = useRef(null);
     const descriptionRef = useRef(null);
-
+    
+    // Handle Escape key press to close the modal
     useEffect(() => {
         function handler(e) {
-            if (e.key === 'Escape') onClose();
+            if (e.key === 'Escape') onClose(); // Close modal when Escape key is pressed
         }
-
+    
         document.addEventListener('keydown', handler);
-
+    
         return () => {
-            document.removeEventListener('keydown', handler);
+            document.removeEventListener('keydown', handler); // Cleanup event listener on unmount
         };
     }, [onClose]);
-
+    
+    // Track previous modal state to trigger closing animation
     useLayoutEffect(() => {
         if (!isOpen && prevIsOpen.current) {
-            setIsClosing(true);
+            setIsClosing(true); // Start closing animation when modal is transitioning to closed
         }
-
-        prevIsOpen.current = isOpen;
+    
+        prevIsOpen.current = isOpen; // Store current modal state
     }, [isOpen]);
-
+    
+    // Prevent rendering when modal is fully closed and animation is complete
     if (!isOpen && !isClosing) return null;
-
+    
+    // Handle adding a new expense
     function addExpense(e) {
         e.preventDefault();
-        console.log(dateRef.current.value);
+    
+        // Retrieve input values from refs
         const date = dateRef.current.value;
         const description = descriptionRef.current.value;
         const amount = amountRef.current.value;
-
+    
+        // Validate inputs
         if (date === '' || description === '' || isNaN(amount)) return;
-
+    
+        // Create a unique ID for the new expense
         const id = crypto.randomUUID();
-        const newExpense = {
-            id,
-            date,
-            description,
-            amount
-        };
-
+        const newExpense = { id, date, description, amount };
+    
+        // Update expenses state with the new expense
         setExpenses((prevExpenses) => [...prevExpenses, newExpense]);
+    
+        // Show success message for 4 seconds
         setShowMessage(true);
         setTimeout(() => setShowMessage(false), 4000);
     }
+    
 
     return (
         <div
-            className={`fixed inset-0 z-10 bg-black/30 modal ${
+            className={`fixed inset-0 z-10 h-screen bg-black/30 modal ${
                 isClosing && 'closing'
             }`}
             onAnimationEnd={() => setIsClosing(false)}
             onClick={onClose}
         >
-            <div className="overlay w-full h-full">
+            <div className="overlay w-full h-full md:flex md:items-center md:justify-center">
                 <div
                     onClick={(e) => e.stopPropagation()}
-                    className="modal-body ml-auto bg-light-gray max-w-80 h-full p-6 space-y-4 overflow-y-auto"
+                    className="modal-body ml-auto md:mr-auto bg-light-gray max-w-80 md:max-w-100 md:w-full h-full md:h-auto p-6 space-y-4 overflow-y-auto"
                 >
                     <header className="flex items-center justify-between gap-2">
                         <div className="text-3xl font-light">Add</div>

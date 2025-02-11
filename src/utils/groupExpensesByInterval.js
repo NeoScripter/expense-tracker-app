@@ -47,6 +47,7 @@ export function groupExpensesByInterval(
             (startDate ? isBefore(startDate, expenseDate) : true) &&
             (endDate ? isBefore(expenseDate, endDate) : true);
 
+        // Check if it corresponds to the both criteria
         if (matchesSearch && matchesDateRange) {
             currentGroup.push(expense);
         }

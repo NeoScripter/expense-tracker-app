@@ -11,24 +11,35 @@ import { DatePicker } from './components/DatePicker';
 import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
+    // Load expenses from local storage or use initial data
     const [expenses, setExpenses] = useLocalStorage('expenses', initialData);
+
+    // State for grouping expenses by day, week, etc.
     const [dateGrouping, setDateGrouping] = useState(DATE_GROUPINGS.DAY);
+
+    // Stores the search query for filtering expenses
     const [searchQuery, setSearchQuery] = useState('');
+
+    // Controls the visibility of the modal
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Stores the start and end dates for filtering expenses
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
+    // Sets start date but ensures it doesn't exceed the end date
     function SelectStartDate(newDate) {
         if (endDate != null && isBefore(endDate, newDate)) return;
         setStartDate(newDate);
     }
 
+    // Sets end date but ensures it doesn't precede the start date
     function SelectEndDate(newDate) {
         if (startDate != null && isBefore(newDate, startDate)) return;
         setEndDate(newDate);
     }
 
-
+    // Groups expenses based on the selected date interval and filters
     const groupedExpenses = groupExpensesByInterval(
         expenses,
         dateGrouping,
@@ -37,6 +48,7 @@ function App() {
         endDate
     );
 
+    // Calculates the total amount from grouped expenses
     const totalAmount = calculateTotal(groupedExpenses);
 
     return (
@@ -61,10 +73,17 @@ function App() {
                     </button>
                 </header>
 
-                <div className='grid items-start sdm:grid-cols-2 sdm:gap-6 px-2 sm:px-0'>
-                  <DatePicker value={startDate} onChange={SelectStartDate} label="Select start date" />
-                  <DatePicker value={endDate} onChange={SelectEndDate} label="Select end date" />
-
+                <div className="grid items-start sdm:grid-cols-2 sdm:gap-6 px-2 sm:px-0">
+                    <DatePicker
+                        value={startDate}
+                        onChange={SelectStartDate}
+                        label="Select start date"
+                    />
+                    <DatePicker
+                        value={endDate}
+                        onChange={SelectEndDate}
+                        label="Select end date"
+                    />
                 </div>
 
                 <ExpenseFilterPanel
@@ -76,12 +95,14 @@ function App() {
                 />
 
                 <div className="grid gap-2 sdm:grid-cols-2">
-                    {groupedExpenses.length > 0 ? groupedExpenses.map((summary, idx) => (
-                        <ExpenseSummary
-                            key={idx + 'summary'}
-                            expenses={summary}
-                        />
-                    )) : "No expenses found"}
+                    {groupedExpenses.length > 0
+                        ? groupedExpenses.map((summary, idx) => (
+                              <ExpenseSummary
+                                  key={idx + 'summary'}
+                                  expenses={summary}
+                              />
+                          ))
+                        : 'No expenses found'}
                 </div>
             </div>{' '}
         </>
