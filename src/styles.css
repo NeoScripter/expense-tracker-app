@@ -1,14 +1,50 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --color-primary-yellow: oklch(84.5% 0.1647 83.59);
-  --color-primary-blue: oklch(59.88% 0.219953 257.8703);
-  --color-light-gray: oklch(98.51% 0 0);
-  --font-display: "Figtree", "sans-serif";
+    --color-primary-yellow: oklch(84.5% 0.1647 83.59);
+    --color-primary-blue: oklch(59.88% 0.219953 257.8703);
+    --color-light-gray: oklch(98.51% 0 0);
+    --font-display: 'Figtree', 'sans-serif';
 
-  --breakpoint-sm: 500px;
+    --breakpoint-sm: 500px;
 }
 
 .titles {
-  @apply uppercase tracking-wider text-gray-500;
+    @apply uppercase tracking-wider text-gray-400;
+}
+
+.btn-primary {
+    @apply font-medium bg-primary-yellow text-white transition-colors duration-300 ease-in-out hover:bg-yellow-500 cursor-pointer tracking-wide;
+}
+
+.modal .overlay {
+  background-color: transparent;
+  animation: fade-in 350ms forwards;
+}
+
+
+
+.modal.closing .overlay {
+    animation: fade-in 350ms forwards reverse;
+}
+
+@keyframes fade-in {
+    100% {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}
+
+.modal .modal-body {
+    animation: slide-in 350ms forwards;
+    transform: translateX(100%);
+}
+
+.modal.closing .modal-body {
+    animation: slide-in 350ms forwards reverse;
+}
+
+@keyframes slide-in {
+    100% {
+      transform: translateX(0%);
+    }
 }

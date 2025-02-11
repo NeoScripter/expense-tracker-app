@@ -4,11 +4,14 @@ import { groupExpensesByInterval } from './utils/groupExpensesByInterval';
 import { useState } from 'react';
 import ExpenseFilterPanel from './components/ExpenseFilterPanel ';
 import calculateTotal from './utils/calculateTotal';
+import logo from './assets/logo.webp';
+import { AddExpenseForm } from './components/AddExpenseForm';
 
 function App() {
     const [expenses, setExpenses] = useState(initialData);
     const [dateGrouping, setDateGrouping] = useState('day');
     const [searchQuery, setSearchQuery] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const groupedExpenses = groupExpensesByInterval(
         expenses,
@@ -21,6 +24,21 @@ function App() {
     return (
         <>
             <div className="p-2 sm:p-4 space-y-4 mx-auto max-w-300">
+                <AddExpenseForm
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                />
+
+                <div className="flex items-center justify-between flex-col sm:flex-row">
+                    <div className="max-w-50 mb-2">
+                        <img src={logo} alt="TrackSpence" />
+                    </div>
+
+                    <button onClick={() => setIsModalOpen(true)} className="btn-primary rounded-sm px-6 py-2">
+                        Add expense
+                    </button>
+                </div>
+
                 <ExpenseFilterPanel
                     dateGrouping={dateGrouping}
                     setDateGrouping={setDateGrouping}
