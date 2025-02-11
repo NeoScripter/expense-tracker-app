@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, isBefore } from 'date-fns';
 import { initialData } from './data';
 import { groupExpensesByInterval } from './utils/groupExpensesByInterval';
 import { useState } from 'react';
@@ -7,18 +7,34 @@ import calculateTotal from './utils/calculateTotal';
 import logo from './assets/logo.webp';
 import { AddExpenseForm } from './components/AddExpenseForm';
 import { DATE_GROUPINGS } from './utils/dateGroupings';
-import Calendar from './components/Calendar';
+import { DatePicker } from './components/DatePicker';
+import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
-    const [expenses, setExpenses] = useState(initialData);
+    const [expenses, setExpenses] = useLocalStorage('expenses', initialData);
     const [dateGrouping, setDateGrouping] = useState(DATE_GROUPINGS.DAY);
     const [searchQuery, setSearchQuery] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+
+    function SelectStartDate(newDate) {
+        if (endDate != null && isBefore(endDate, newDate)) return;
+        setStartDate(newDate);
+    }
+
+    function SelectEndDate(newDate) {
+        if (startDate != null && isBefore(newDate, startDate)) return;
+        setEndDate(newDate);
+    }
+
 
     const groupedExpenses = groupExpensesByInterval(
         expenses,
         dateGrouping,
-        searchQuery
+        searchQuery,
+        startDate,
+        endDate
     );
 
     const totalAmount = calculateTotal(groupedExpenses);
@@ -46,8 +62,8 @@ function App() {
                 </header>
 
                 <div className='grid items-start sdm:grid-cols-2 sdm:gap-6 px-2 sm:px-0'>
-                  <Calendar label="Select start date" />
-                  <Calendar label="Select end date" />
+                  <DatePicker value={startDate} onChange={SelectStartDate} label="Select start date" />
+                  <DatePicker value={endDate} onChange={SelectEndDate} label="Select end date" />
 
                 </div>
 
@@ -59,13 +75,13 @@ function App() {
                     setSearchQuery={setSearchQuery}
                 />
 
-                <div className="space-y-2">
-                    {groupedExpenses.map((summary, idx) => (
+                <div className="grid gap-2 sdm:grid-cols-2">
+                    {groupedExpenses.length > 0 ? groupedExpenses.map((summary, idx) => (
                         <ExpenseSummary
                             key={idx + 'summary'}
                             expenses={summary}
                         />
-                    ))}
+                    )) : "No expenses found"}
                 </div>
             </div>{' '}
         </>
@@ -83,9 +99,9 @@ function ExpenseSummary({ expenses }) {
 
     return (
         <div className="space-y-2">
-            <div className="border border-gray-200 rounded-xs pb-6 bg-white">
+            <div className="border h-full border-gray-200 rounded-xs pb-6 bg-white">
                 <header className="flex justify-between gap-2 items-center px-4 sm:px-8 py-5 border-b border-gray-200">
-                    <div>{date && format(date, 'MMMM do')}</div>
+                    <div>{date && format(date, 'MMMM do, yyyy')}</div>
                     <div>Spent: ${total / 100}</div>
                 </header>
 
