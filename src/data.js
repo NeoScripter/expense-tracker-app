@@ -1,4 +1,4 @@
-export const expenses = [
+export const initialData = [
     { id: "exp-1f7b6d9c", date: "2025-02-08", description: "Movie Tickets", amount: 30.00 },
     { id: "exp-4c2e9a5b", date: "2025-02-08", description: "Books", amount: 15.75 },
     { id: "exp-7d5f1c9b", date: "2025-02-10", description: "Subscription Service", amount: 12.99 },

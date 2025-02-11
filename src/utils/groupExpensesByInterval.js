@@ -1,4 +1,7 @@
-export function groupExpensesByInterval(expenses, isSameInterval) {
+import { isSameDay, isSameWeek } from 'date-fns';
+
+export function groupExpensesByInterval(expenses, dateGrouping, searchQuery) {
+    const isSameInterval = dateGrouping === 'week' ? isSameWeek : isSameDay;
     // Sort the expenses in acsending order
     const sortedExpenses = [...expenses].sort(
         (a, b) => new Date(a.date) - new Date(b.date)
@@ -14,24 +17,34 @@ export function groupExpensesByInterval(expenses, isSameInterval) {
     for (const expense of sortedExpenses) {
         const expenseDate = new Date(expense.date);
 
-        // Initialize first date
+        // Initialize the first date for grouping
         if (currentDate === null) currentDate = expenseDate;
 
-        if (isSameInterval(expenseDate, currentDate)) {
-            // Add to the current group
-            currentGroup.push(expense);
-        } else {
-            // Store completed group
-            groupedExpenses.push([...currentGroup]);
-            // Start a new group
-            currentGroup = [expense];
+        // If the expense belongs to a new time interval, save the previous group
+        if (
+            !isSameInterval(expenseDate, currentDate) &&
+            currentGroup.length > 0
+        ) {
+            groupedExpenses.push([...currentGroup]); // Store the completed group
+            currentGroup = []; // Start a new group
         }
 
-        // Update reference for next iteration
+        // Add expense to the current group if it matches the search query or if search is empty
+        if (
+            searchQuery.trim() === '' || // Include all if no search
+            expense.description
+                .toLowerCase()
+                .includes(searchQuery.trim().toLowerCase())
+        ) {
+            currentGroup.push(expense);
+        }
+
+        // Update the current date reference for the next iteration
         currentDate = expenseDate;
     }
-    // Push the last remaining group to the expenses
-    if (currentGroup.length > 0) {
+
+    // Push the last group if there are remaining expenses or search is empty
+    if (currentGroup.length > 0 || searchQuery.trim() === '') {
         groupedExpenses.push([...currentGroup]);
     }
 
