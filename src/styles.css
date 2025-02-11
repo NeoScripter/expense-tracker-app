@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-yellow: oklch(84.5% 0.1647 83.59);
+  --color-primary-blue: oklch(59.88% 0.219953 257.8703);
+  --color-light-gray: oklch(98.51% 0 0);
+}
+
+.titles {
+  @apply uppercase tracking-wider text-gray-500;
+}
