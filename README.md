@@ -2,6 +2,12 @@
 
 This is a React application bootstrapped with [Vite](https://vitejs.dev/) that helps organize by the time and description.
 
+[Visit the app here](https://expense-tracker-app-blond-eight.vercel.app/)
+
+## Screenshot
+
+![Website Screenshot](public/screenshot.webp)
+
 ## 📥 Clone the Repository
 
 ```sh
