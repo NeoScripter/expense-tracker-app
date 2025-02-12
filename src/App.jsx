@@ -29,12 +29,21 @@ function App() {
 
     // Sets start date but ensures it doesn't exceed the end date
     function SelectStartDate(newDate) {
+        if (newDate == null) {
+            setStartDate(newDate);
+            return;
+        }
+
         if (endDate != null && isBefore(endDate, newDate)) return;
         setStartDate(newDate);
     }
 
     // Sets end date but ensures it doesn't precede the start date
     function SelectEndDate(newDate) {
+        if (newDate == null) {
+            setEndDate(newDate);
+            return;
+        }
         if (startDate != null && isBefore(newDate, startDate)) return;
         setEndDate(newDate);
     }
@@ -75,11 +84,13 @@ function App() {
 
                 <div className="grid items-start sdm:grid-cols-2 sdm:gap-6 px-2 sm:px-0">
                     <DatePicker
+                        key="startTimeDatePicker"
                         value={startDate}
                         onChange={SelectStartDate}
                         label="Select start date"
                     />
                     <DatePicker
+                        key="endTimeDatePicker"
                         value={endDate}
                         onChange={SelectEndDate}
                         label="Select end date"

@@ -20,7 +20,10 @@ export function DatePicker({ value, onChange, label = 'Select a date' }) {
                     {value == null ? label : format(value, 'MMM do, yyyy')}
                 </div>
                 <button
-                    onClick={() => onChange(null)}
+                    onClick={() => {
+                        console.log("cliked")
+                        onChange(null);
+                    }}
                     className="cursor-pointer"
                 >
                     Reset
